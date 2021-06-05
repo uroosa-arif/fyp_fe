@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:careaware/Models/ClientModel.dart';
 import 'package:careaware/Registration/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +23,15 @@ class MyApp extends StatelessWidget {
 }
 
 class CNIC extends StatefulWidget {
+
+  ClientModel clientModel;
+  String role;
+  String gender;
+  File profilePhoto;
+
+
+  CNIC({this.clientModel, this.profilePhoto,this.role,this.gender});
+
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -55,6 +65,17 @@ class _MyHomePageState extends State<CNIC> {
     });
   }
 
+
+  @override
+  void initState() {
+    print(widget.role);
+    print(widget.gender);
+    print(widget.clientModel.email);
+    print(widget.profilePhoto.path);
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,19 +86,28 @@ class _MyHomePageState extends State<CNIC> {
           'REGISTRATION',
           textAlign: TextAlign.center,
         ),
-//        leading: IconButton(
-//          icon: Icon(Icons.keyboard_arrow_left, color: Colors.white),
-//          onPressed: () {
-//            Navigator.push(context, MaterialPageRoute(builder: (_)=> Services()));
-//          },
-//        ),
+       // leading: IconButton(
+       //   icon: Icon(Icons.keyboard_arrow_left, color: Colors.white),
+       //   onPressed: () {
+       //     Navigator.push(context, MaterialPageRoute(builder: (_)=> Services()));
+       //   },
+       // ),
+        leading: Container(width: 0,height: 0,),
         actions: <Widget>[
           Padding(
               padding: EdgeInsets.only(right: 20.0),
               child: GestureDetector(
                 onTap: () {
                   Navigator.push(
-                      context, MaterialPageRoute(builder: (_) => Services()));
+                      context, MaterialPageRoute(builder: (_) => Services(
+                    clientModel: widget.clientModel,
+                    gender: widget.gender,
+                    role: widget.role,
+                    profilePhoto: widget.profilePhoto,
+                    cnicfront: _image,
+                    cnicback: _image2 ,
+
+                  )));
                 },
                 child: Icon(
                   Icons.keyboard_arrow_right,
@@ -171,30 +201,30 @@ class _MyHomePageState extends State<CNIC> {
     );
   }
 
-  Widget getWidget(bool alignVertical) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
-      alignment: Alignment.center,
-      child: GenderPickerWithImage(
-        verticalAlignedText: alignVertical,
-        // to show what's selected on app opens, but by default it's Male
-        selectedGender: Gender.Male,
-        selectedGenderTextStyle:
-            TextStyle(color: Color(0xff9CD7DB), fontWeight: FontWeight.bold),
-        unSelectedGenderTextStyle:
-            TextStyle(color: Color(0xff007BA4), fontWeight: FontWeight.bold),
-        onChanged: (Gender gender) {
-          print(gender);
-        },
-        //Alignment between icons
-        equallyAligned: true,
-        animationDuration: Duration(milliseconds: 300),
-        isCircular: true,
-
-        opacityOfGradient: 0.1,
-        padding: const EdgeInsets.all(3),
-        size: 60, //default : 40
-      ),
-    );
-  }
+  // Widget getWidget(bool alignVertical) {
+  //   return Container(
+  //     margin: EdgeInsets.symmetric(vertical: 10),
+  //     alignment: Alignment.center,
+  //     child: GenderPickerWithImage(
+  //       verticalAlignedText: alignVertical,
+  //       // to show what's selected on app opens, but by default it's Male
+  //       selectedGender: Gender.Male,
+  //       selectedGenderTextStyle:
+  //           TextStyle(color: Color(0xff9CD7DB), fontWeight: FontWeight.bold),
+  //       unSelectedGenderTextStyle:
+  //           TextStyle(color: Color(0xff007BA4), fontWeight: FontWeight.bold),
+  //       onChanged: (Gender gender) {
+  //         print(gender);
+  //       },
+  //       //Alignment between icons
+  //       equallyAligned: true,
+  //       animationDuration: Duration(milliseconds: 300),
+  //       isCircular: true,
+  //
+  //       opacityOfGradient: 0.1,
+  //       padding: const EdgeInsets.all(3),
+  //       size: 60, //default : 40
+  //     ),
+  //   );
+  // }
 }

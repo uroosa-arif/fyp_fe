@@ -191,101 +191,103 @@ class _MyHomePageState extends State<Login> {
             backgroundColor: Colors.transparent,
             elevation: 0,
           )),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Form(
-            key: _formKey,
-            autovalidate: _autoValidate,
-            child: Padding(
-              padding: const EdgeInsets.all(36.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  SizedBox(height: 40.0),
-                  CircleAvatar(
-                    radius: 48.0,
-                    backgroundImage: AssetImage('images/Profile.jpg'),
-                  ),
-                  SizedBox(height: 20.0),
-                  emailField,
-                  SizedBox(height: 10.0),
-                  passwordField,
-                  SizedBox(
-                    height: 1.0,
-                  ),
-                  Container(
-                      alignment: Alignment.center,
-                      padding: EdgeInsets.all(10),
-                      margin: const EdgeInsets.only(top: 10),
-                      child: Text(
-                        'Login As',
-                        style: TextStyle(
-                            color: Color(0xFF007BA4),
-                            fontWeight: FontWeight.w500,
-                            fontSize: 25),
-                      )),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 28.0),
-                    child: new Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (_) => CMain()));
-                          },
-                          child: new Radio(
-                            value: 0,
-                            groupValue: _radioValue,
-                            onChanged: _handleRadioValueChange,
-                          ),
-                        ),
-                        new Text(
-                          'Employee',
-                          style: new TextStyle(fontSize: 15.0),
-                        ),
-                        InkWell(
-                          onTap: () {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (_) => EMain()));
-                          },
-                          child: new Radio(
-                            value: 1,
-                            groupValue: _radioValue,
-                            onChanged: _handleRadioValueChange,
-                          ),
-                        ),
-                        new Text(
-                          'Client',
-                          style: new TextStyle(
-                            fontSize: 15.0,
-                          ),
-                        ),
-                      ],
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Form(
+              key: _formKey,
+              autovalidate: _autoValidate,
+              child: Padding(
+                padding: const EdgeInsets.all(36.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    SizedBox(height: 40.0),
+                    CircleAvatar(
+                      radius: 48.0,
+                      backgroundImage: AssetImage('assets/images/Profile.jpg'),
                     ),
-                  ),
-                  SizedBox(
-                    height: 18.0,
-                  ),
-                  loginButton,
-                  SizedBox(
-                    height: 10.0,
-                  ),
-                  RegisterButton,
-                  SizedBox(
-                    height: 5.0,
-                  ),
-                  ForgotPasswordButton,
-                  SizedBox(
-                    height: 5.0,
-                  ),
-                ],
+                    SizedBox(height: 20.0),
+                    emailField,
+                    SizedBox(height: 10.0),
+                    passwordField,
+                    SizedBox(
+                      height: 1.0,
+                    ),
+                    Container(
+                        alignment: Alignment.center,
+                        padding: EdgeInsets.all(10),
+                        margin: const EdgeInsets.only(top: 10),
+                        child: Text(
+                          'Login As',
+                          style: TextStyle(
+                              color: Color(0xFF007BA4),
+                              fontWeight: FontWeight.w500,
+                              fontSize: 25),
+                        )),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 28.0),
+                      child: new Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (_) => CMain()));
+                            },
+                            child: new Radio(
+                              value: 0,
+                              groupValue: _radioValue,
+                              onChanged: _handleRadioValueChange,
+                            ),
+                          ),
+                          new Text(
+                            'Employee',
+                            style: new TextStyle(fontSize: 15.0),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (_) => EMain()));
+                            },
+                            child: new Radio(
+                              value: 1,
+                              groupValue: _radioValue,
+                              onChanged: _handleRadioValueChange,
+                            ),
+                          ),
+                          new Text(
+                            'Client',
+                            style: new TextStyle(
+                              fontSize: 15.0,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 18.0,
+                    ),
+                    loginButton,
+                    SizedBox(
+                      height: 10.0,
+                    ),
+                    RegisterButton,
+                    SizedBox(
+                      height: 5.0,
+                    ),
+                    ForgotPasswordButton,
+                    SizedBox(
+                      height: 5.0,
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

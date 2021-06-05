@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "244992417352",
+    "project_id": "careaware-2a5c3",
+    "storage_bucket": "careaware-2a5c3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:244992417352:android:393e27b070ce7edcca027d",
+        "android_client_info": {
+          "package_name": "com.example.fyp_fe"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "244992417352-6jsg1u12e5ijjmphn6h0i3lpjkmjqod0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6unVWn5yoZuMOkfqayxXrN5yj676kIb0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "244992417352-6jsg1u12e5ijjmphn6h0i3lpjkmjqod0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

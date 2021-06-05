@@ -1,3 +1,4 @@
+import 'package:careaware/Models/ClientModel.dart';
 import 'package:flutter/material.dart';
 import 'package:careaware/Registration/regi_page2.dart';
 import 'package:careaware/Registration/services.dart';
@@ -13,10 +14,18 @@ class RegPage extends StatefulWidget {
 class _RegPageState extends State<RegPage> {
   //form key here
   final _formKey = GlobalKey<FormState>();
+
   // variable to enable auto validating of the form
   bool _autoValidate = true;
+
   // variable to enable toggling between showing and hiding password
   bool _hidePassword = true;
+
+  TextEditingController name = TextEditingController();
+  TextEditingController email = TextEditingController();
+  TextEditingController password = TextEditingController();
+  TextEditingController phoneNumber = TextEditingController();
+  TextEditingController address = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -92,6 +101,7 @@ class _RegPageState extends State<RegPage> {
                         height: 30.0,
                       ),
                       TextFormField(
+                        controller: name,
                         decoration: InputDecoration(
                           fillColor: Colors.white,
                           filled: true,
@@ -111,6 +121,7 @@ class _RegPageState extends State<RegPage> {
                         height: 3.0,
                       ),
                       TextFormField(
+                        controller: email,
                         decoration: InputDecoration(
                             fillColor: Colors.white,
                             filled: true,
@@ -127,6 +138,7 @@ class _RegPageState extends State<RegPage> {
                         height: 3.0,
                       ),
                       TextFormField(
+                        controller: phoneNumber,
                         decoration: InputDecoration(
                           fillColor: Colors.white,
                           filled: true,
@@ -144,6 +156,7 @@ class _RegPageState extends State<RegPage> {
                         height: 3.0,
                       ),
                       TextFormField(
+                        controller: password,
                         decoration: InputDecoration(
                             fillColor: Colors.white,
                             filled: true,
@@ -176,6 +189,7 @@ class _RegPageState extends State<RegPage> {
                         height: 3.0,
                       ),
                       TextFormField(
+                        controller: address,
                         decoration: InputDecoration(
                           fillColor: Colors.white,
                           filled: true,
@@ -219,7 +233,14 @@ class _RegPageState extends State<RegPage> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (_) => Services()));
+                                      builder: (_) => regi_page2(
+                                              clientModel: ClientModel(
+                                            email: email.text,
+                                            fullName: name.text,
+                                            address: address.text,
+                                            phoneNumber: phoneNumber.text,
+                                            password: password.text,
+                                          ))));
                             }
                           },
                           textColor: Colors.white,

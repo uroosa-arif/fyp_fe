@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:careaware/Volunteer/Volunteer.dart';
 
@@ -11,8 +12,23 @@ void main() {
   ));
 }
 
-class FirstScreen extends StatelessWidget {
+class FirstScreen extends StatefulWidget {
   // This widget is the root of your application.
+  @override
+  _FirstScreenState createState() => _FirstScreenState();
+}
+
+class _FirstScreenState extends State<FirstScreen> {
+  @override
+  void initState() {
+    initalize();
+    super.initState();
+  }
+
+  initalize() async {
+    await Firebase.initializeApp();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +41,7 @@ class FirstScreen extends StatelessWidget {
             new Container(
               padding: EdgeInsets.only(top: 50),
               child: Image.asset(
-                'images/Home_Screen_Icon.png',
+                'assets/images/Home_Screen_Icon.png',
                 height: 250,
               ),
             ),

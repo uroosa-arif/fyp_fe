@@ -50,15 +50,15 @@ class Volunteer extends StatelessWidget {
           /// Add the sample image file into the images folder
           children: [
             Image.asset(
-              'images/sample_image_1.png',
+              'assets/images/sample_image_1.png',
               fit: BoxFit.fitWidth,
             ),
             Image.asset(
-              'images/sample_image_2.jpg',
+              'assets/images/sample_image_2.jpg',
               fit: BoxFit.fitWidth,
             ),
             Image.asset(
-              'images/sample_image_3.jpg',
+              'assets/images/sample_image_3.jpg',
               fit: BoxFit.fitWidth,
             ),
           ],

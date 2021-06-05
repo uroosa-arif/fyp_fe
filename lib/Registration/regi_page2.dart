@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:careaware/Models/ClientModel.dart';
 import 'package:careaware/Registration/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,10 @@ import 'CNIC.dart';
 void main() => runApp(regi_page2());
 
 class regi_page2 extends StatefulWidget {
+  ClientModel clientModel;
+
+  regi_page2({this.clientModel});
+
   @override
   _regi_page2 createState() => _regi_page2();
 }
@@ -21,6 +26,9 @@ class _regi_page2 extends State<regi_page2> {
 
   File _image;
   final picker = ImagePicker();
+
+  String role;
+  String gender1;
 
   bool asTabs = false;
   String selectedValue;
@@ -43,6 +51,8 @@ class _regi_page2 extends State<regi_page2> {
   }
 
   void initState() {
+    print(widget.clientModel.email);
+
     String wordPair = " ";
     loremIpsum.split(" ").forEach((word) {
       if (wordPair.isEmpty) {
@@ -70,6 +80,12 @@ class _regi_page2 extends State<regi_page2> {
   void _handleRadioValueChange(int value) {
     setState(() {
       _radioValue = value;
+
+      if (_radioValue == 0) {
+        role = "Employee";
+      } else {
+        role = "Client";
+      }
 
       switch (_radioValue) {
         case 0:
@@ -224,7 +240,14 @@ class _regi_page2 extends State<regi_page2> {
                 ),
                 onPressed: () {
                   Navigator.push(
-                      context, MaterialPageRoute(builder: (_) => CNIC()));
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => CNIC(
+                                clientModel: widget.clientModel,
+                                profilePhoto: _image,
+                                role: role,
+                                gender: gender1,
+                              )));
                 },
                 textColor: Colors.white,
                 elevation: 2.0,
@@ -249,7 +272,10 @@ class _regi_page2 extends State<regi_page2> {
         unSelectedGenderTextStyle:
             TextStyle(color: Color(0xff007BA4), fontWeight: FontWeight.bold),
         onChanged: (Gender gender) {
-          print(gender);
+          print(gender.index);
+          setState(() {
+            gender1 = gender.index == 0 ? "Male" : "Female";
+          });
         },
         //Alignment between icons
         equallyAligned: true,
