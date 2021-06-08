@@ -182,7 +182,7 @@ class _ServicesState extends State<Services> {
     );
   }
 
-  bool isLoading;
+  bool isLoading=false;
 
   void _onFormSaved() async {
     final FormState form = _formKey.currentState;
@@ -234,6 +234,15 @@ class _ServicesState extends State<Services> {
       setState(() {
         isLoading = false;
       });
+
+      Navigator.of(context).pop();
+      Navigator.of(context).pop();
+      Navigator.of(context).pop();
+      Navigator.of(context).pop();
+      Navigator.of(context).pop();
+
+
+
     } catch (e) {
       print("Koi msla aggya hau:${e.toString()}");
       setState(() {

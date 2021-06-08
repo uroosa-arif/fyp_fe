@@ -27,8 +27,8 @@ class _regi_page2 extends State<regi_page2> {
   File _image;
   final picker = ImagePicker();
 
-  String role;
-  String gender1;
+  String role="Employee";
+  String gender1='Male';
 
   bool asTabs = false;
   String selectedValue;
@@ -219,9 +219,7 @@ class _regi_page2 extends State<regi_page2> {
                   borderRadius: BorderRadius.circular(12),
                 ),
                 height: 200,
-                child: Center(
-                  child: _image == null ? Text('') : Image.file(_image),
-                ),
+                child: _image == null ? Text('') : Image.file(_image,fit: BoxFit.fill,),
               ),
             ),
             SizedBox(

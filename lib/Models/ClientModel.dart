@@ -40,8 +40,8 @@ class ClientModel {
     this.profilePhotoUrl=map['profilePhotoUrl'];
     this.cnicFront=map['cnicFront'];
     this.cnicBack=map['cnicBack'];
-    this.services=map['services '];
-    this.isAccepted=map['isAccepted '];
+    // this.services=map['services'];
+    this.isAccepted=map['isAccepted'];
   }
 
 

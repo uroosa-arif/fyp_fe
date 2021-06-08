@@ -65,193 +65,189 @@ class _RegPageState extends State<RegPage> {
           ],
         ),
 //        backgroundColor: Color(0xff9CD7DB),
-        body: Container(
-          padding: EdgeInsets.only(bottom: 30),
+        body: SingleChildScrollView(
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Expanded(
-                child: Container(
-                  child: Column(
-                    children: <Widget>[
-                      Container(
+              Container(
+                color: Color(0xFF49B4BE),
+                child: InkWell(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Row(
+                      children: [
+                        Text("Already Registered?",
+                            style: TextStyle(
+                                color: Colors.white, fontSize: 18)),
+                        Text(" Sign in",
+                            style: TextStyle(
+                                fontSize: 18,
+                                decoration: TextDecoration.underline,
+                                color: Colors.white)),
+                      ],
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (_) => Login()));
+                  },
+                ),
+              ),
+              SizedBox(
+                height: 30.0,
+              ),
+              TextFormField(
+                controller: name,
+                decoration: InputDecoration(
+                  fillColor: Colors.white,
+                  filled: true,
+                  border: OutlineInputBorder(),
+                  prefixIcon: Icon(
+                    Icons.person,
+                    color: Color(0xFF49B4BE),
+                  ),
+                  labelText: 'Full Name',
+                ),
+                keyboardType: TextInputType.text,
+                validator: (String value) {
+                  return value.isEmpty ? 'Name cannot be empty' : null;
+                },
+              ),
+              SizedBox(
+                height: 3.0,
+              ),
+              TextFormField(
+                controller: email,
+                decoration: InputDecoration(
+                    fillColor: Colors.white,
+                    filled: true,
+                    border: OutlineInputBorder(),
+                    prefixIcon: Icon(
+                      Icons.email,
+                      color: Color(0xFF49B4BE),
+                    ),
+                    labelText: 'Email'),
+                keyboardType: TextInputType.emailAddress,
+                validator: validateEmail,
+              ),
+              SizedBox(
+                height: 3.0,
+              ),
+              TextFormField(
+                controller: phoneNumber,
+                decoration: InputDecoration(
+                  fillColor: Colors.white,
+                  filled: true,
+                  border: OutlineInputBorder(),
+                  prefixIcon: Icon(
+                    Icons.phone,
+                    color: Color(0xFF49B4BE),
+                  ),
+                  labelText: 'Phone Number',
+                ),
+                keyboardType: TextInputType.phone,
+                validator: validateMobile,
+              ),
+              SizedBox(
+                height: 3.0,
+              ),
+              TextFormField(
+                controller: password,
+                decoration: InputDecoration(
+                    fillColor: Colors.white,
+                    filled: true,
+                    suffixIcon: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _hidePassword = !_hidePassword;
+                        });
+                      },
+                      child: Icon(
+                        Icons.remove_red_eye,
                         color: Color(0xFF49B4BE),
-                        child: InkWell(
-                          child: Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Row(
-                              children: [
-                                Text("Already Registered?",
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 18)),
-                                Text(" Sign in",
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        decoration: TextDecoration.underline,
-                                        color: Colors.white)),
-                              ],
-                            ),
-                          ),
-                          onTap: () {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (_) => Login()));
-                          },
-                        ),
                       ),
-                      SizedBox(
-                        height: 30.0,
-                      ),
-                      TextFormField(
-                        controller: name,
-                        decoration: InputDecoration(
-                          fillColor: Colors.white,
-                          filled: true,
-                          border: OutlineInputBorder(),
-                          prefixIcon: Icon(
-                            Icons.person,
-                            color: Color(0xFF49B4BE),
-                          ),
-                          labelText: 'Full Name',
-                        ),
-                        keyboardType: TextInputType.text,
-                        validator: (String value) {
-                          return value.isEmpty ? 'Name cannot be empty' : null;
-                        },
-                      ),
-                      SizedBox(
-                        height: 3.0,
-                      ),
-                      TextFormField(
-                        controller: email,
-                        decoration: InputDecoration(
-                            fillColor: Colors.white,
-                            filled: true,
-                            border: OutlineInputBorder(),
-                            prefixIcon: Icon(
-                              Icons.email,
-                              color: Color(0xFF49B4BE),
-                            ),
-                            labelText: 'Email'),
-                        keyboardType: TextInputType.emailAddress,
-                        validator: validateEmail,
-                      ),
-                      SizedBox(
-                        height: 3.0,
-                      ),
-                      TextFormField(
-                        controller: phoneNumber,
-                        decoration: InputDecoration(
-                          fillColor: Colors.white,
-                          filled: true,
-                          border: OutlineInputBorder(),
-                          prefixIcon: Icon(
-                            Icons.phone,
-                            color: Color(0xFF49B4BE),
-                          ),
-                          labelText: 'Phone Number',
-                        ),
-                        keyboardType: TextInputType.phone,
-                        validator: validateMobile,
-                      ),
-                      SizedBox(
-                        height: 3.0,
-                      ),
-                      TextFormField(
-                        controller: password,
-                        decoration: InputDecoration(
-                            fillColor: Colors.white,
-                            filled: true,
-                            suffixIcon: GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  _hidePassword = !_hidePassword;
-                                });
-                              },
-                              child: Icon(
-                                Icons.remove_red_eye,
-                                color: Color(0xFF49B4BE),
-                              ),
-                            ),
-                            prefixIcon: Icon(
-                              Icons.vpn_key,
-                              color: Color(0xFF49B4BE),
-                            ),
-                            border: OutlineInputBorder(),
-                            labelText: 'Password'),
-                        keyboardType: TextInputType.visiblePassword,
-                        obscureText: _hidePassword,
-                        validator: (String value) {
-                          return value.length < 8
-                              ? 'Password must be more than 8 characters'
-                              : null;
-                        },
-                      ),
-                      SizedBox(
-                        height: 3.0,
-                      ),
-                      TextFormField(
-                        controller: address,
-                        decoration: InputDecoration(
-                          fillColor: Colors.white,
-                          filled: true,
-                          border: OutlineInputBorder(),
-                          prefixIcon: Icon(
-                            Icons.home,
-                            color: Color(0xFF49B4BE),
-                          ),
-                          labelText: 'Address',
-                        ),
-                        keyboardType: TextInputType.text,
-                        validator: (String value) {
-                          return value.isEmpty
-                              ? 'Address cannot be empty'
-                              : null;
-                        },
-                      ),
-                      SizedBox(
-                        height: 10.0,
-                      ),
-                      SizedBox(
-                        height: 10.0,
-                      ),
-                      SizedBox(
-                        width: 150,
-                        child: RaisedButton(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(25),
-                          ),
-                          color: Color(0xff007BA4),
-                          child: Text(
-                            'Next',
-                            style: TextStyle(fontSize: 20),
-                          ),
+                    ),
+                    prefixIcon: Icon(
+                      Icons.vpn_key,
+                      color: Color(0xFF49B4BE),
+                    ),
+                    border: OutlineInputBorder(),
+                    labelText: 'Password'),
+                keyboardType: TextInputType.visiblePassword,
+                obscureText: _hidePassword,
+                validator: (String value) {
+                  return value.length < 8
+                      ? 'Password must be more than 8 characters'
+                      : null;
+                },
+              ),
+              SizedBox(
+                height: 3.0,
+              ),
+              Padding(
+                padding:  EdgeInsets.symmetric(horizontal: 10),
+                child: TextFormField(
+                  controller: address,
+                  decoration: InputDecoration(
+                    fillColor: Colors.white,
+                    filled: true,
+                    border: OutlineInputBorder(),
+                    prefixIcon: Icon(
+                      Icons.home,
+                      color: Color(0xFF49B4BE),
+                    ),
+                    labelText: 'Address',
+                  ),
+                  keyboardType: TextInputType.text,
+                  validator: (String value) {
+                    return value.isEmpty
+                        ? 'Address cannot be empty'
+                        : null;
+                  },
+                ),
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              SizedBox(
+                width: 150,
+                child: RaisedButton(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(25),
+                  ),
+                  color: Color(0xff007BA4),
+                  child: Text(
+                    'Next',
+                    style: TextStyle(fontSize: 20),
+                  ),
 //                          icon: Icon(Icons.navigate_next),
-                          onPressed: () {
-                            if (_formKey.currentState.validate()) {
+                  onPressed: () {
+                    if (_formKey.currentState.validate()) {
 //                              Scaffold.of(context).showSnackBar(SnackBar(
 //                                content: Text('Form Validated, No errors'),
 //                              ));
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) => regi_page2(
-                                              clientModel: ClientModel(
-                                            email: email.text,
-                                            fullName: name.text,
-                                            address: address.text,
-                                            phoneNumber: phoneNumber.text,
-                                            password: password.text,
-                                          ))));
-                            }
-                          },
-                          textColor: Colors.white,
-                          elevation: 2.0,
-                          padding: EdgeInsets.all(10.0),
-                        ),
-                      ),
-                    ],
-                  ),
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => regi_page2(
+                                      clientModel: ClientModel(
+                                    email: email.text,
+                                    fullName: name.text,
+                                    address: address.text,
+                                    phoneNumber: phoneNumber.text,
+                                    password: password.text,
+                                  ))));
+                    }
+                  },
+                  textColor: Colors.white,
+                  elevation: 2.0,
+                  padding: EdgeInsets.all(10.0),
                 ),
-              )
+              ),
+              SizedBox(height: 300,),
             ],
           ),
         ),

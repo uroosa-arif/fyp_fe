@@ -1,10 +1,14 @@
 import 'package:careaware/Client/CMain.dart';
 import 'package:careaware/Employee/EMain.dart';
+import 'package:careaware/Models/ClientModel.dart';
 import 'package:careaware/Registration/ForgetPassword.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:careaware/Registration/FirstScreen.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'Terms.dart';
 
 void main() => runApp(MyApp());
@@ -51,6 +55,100 @@ class _MyHomePageState extends State<Login> {
     });
   }
 
+
+  loginToFirebase()async {
+
+
+    print(_email);
+    print(_password);
+
+    try{
+      UserCredential userCredential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(
+          email: _email, password: _password);
+
+      showToast("Login Success");
+    }
+    catch(error) {
+      var errorMessage =
+          'The password is invalid or the user does not have a password.';
+      print(error);
+      if (error
+          .toString()
+          .contains('no user record corresponding to this identifier')) {
+        errorMessage = 'No such user found';
+      } else if (error.toString().contains('INVALID_EMAIL')) {
+        errorMessage = 'This is not a valid email address';
+      } else if (error.toString().contains('WEAK_PASSWORD')) {
+        errorMessage = 'This password is too weak.';
+      } else if (error.toString().contains('EMAIL_NOT_FOUND')) {
+        errorMessage = 'Could not find a user with that email.';
+      } else if (error.toString().contains('INVALID_PASSWORD')) {
+        errorMessage = 'Invalid password.';
+      }
+
+
+      showToast(errorMessage);
+      return;
+    }
+
+
+
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection("users")
+        .where('email', isEqualTo: _email)
+        .get();
+    print(querySnapshot.docs.length);
+    print(querySnapshot.docs[0].data().toString() );
+
+
+    ClientModel clientModel=ClientModel.fromJson(querySnapshot.docs[0].data());
+
+
+
+
+
+    if(clientModel.role=='Employee')
+      {
+        if(_radioValue==0)
+          {
+            print("employeee data hi hai");
+            print(clientModel.isAccepted);
+            if(clientModel.isAccepted==false){
+              showToast("Please visit us to approve your account");
+              return;
+            }
+            Navigator.push(context, MaterialPageRoute(builder: (_) => EMain()));
+
+          }
+        else{
+          showToast("No such client data found");
+        }
+      }
+
+
+
+    if(clientModel.role=='Client')
+    {
+      if(_radioValue==1)
+      {
+        print("client DAta data hi hai");
+        if(clientModel.isAccepted==false){
+          showToast("Please visit us to approve your account");
+          return;
+        }
+        Navigator.push(context, MaterialPageRoute(builder: (_) => CMain()));
+
+      }
+      else{
+        showToast("No such employee data found");
+      }
+    }
+
+
+  }
+
+
   @override
   Widget build(BuildContext context) {
     final emailField = TextFormField(
@@ -75,7 +173,7 @@ class _MyHomePageState extends State<Login> {
         return null;
       },
       keyboardType: TextInputType.emailAddress,
-      onSaved: (email) => _email = email,
+      onChanged: (email) => _email = email,
     );
 
     SizedBox(
@@ -110,7 +208,7 @@ class _MyHomePageState extends State<Login> {
       validator: (String value) {
         return value.length < 8 ? 'Incorrect Password' : null;
       },
-      onSaved: (password) => _password = password,
+      onChanged: (password) => _password = password,
     );
 
     SizedBox(
@@ -129,18 +227,15 @@ class _MyHomePageState extends State<Login> {
                 letterSpacing: 1.0,
                 color: Colors.white,
                 fontWeight: FontWeight.bold)),
-        onPressed: () {
-          if (_radioValue == 0) {
-            Navigator.push(context, MaterialPageRoute(builder: (_) => EMain()));
-          } else if (_radioValue == 1) {
-            Navigator.push(context, MaterialPageRoute(builder: (_) => CMain()));
-          }
-          if (_formKey.currentState.validate()) {
-//            _formKey.currentState.save();
-          }
+        onPressed: () async{
+          await loginToFirebase();
         },
       ),
     );
+
+
+
+
 
     final RegisterButton = Material(
       borderRadius: BorderRadius.circular(30.0),
@@ -316,4 +411,17 @@ class ExampleNumber {
       return (ExampleNumber(num));
     })).toList();
   }
+}
+
+
+
+void showToast(String message){
+  Fluttertoast.showToast(
+      msg: "$message",
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIosWeb: 1,
+      backgroundColor: Colors.black,
+      textColor: Colors.white,
+      fontSize: 16.0);
 }
