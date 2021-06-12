@@ -28,6 +28,26 @@
 
   <title>fyp_fe</title>
   <link rel="manifest" href="manifest.json">
+  <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-storage.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-database.js"></script>
+  <script>
+    // TODO: Replace the following with your app's Firebase project configuration.
+    // See: https://support.google.com/firebase/answer/7015592
+    var firebaseConfig = {
+      apiKey: "AIzaSyDNj5Fa_OMUL5japzmt7rjNcCl3shY6g-A",
+      authDomain: "careaware-2a5c3.firebaseapp.com",
+      databaseURL: "https://careaware-2a5c3.firebaseio.com",
+      projectId: "careaware-2a5c3",
+      storageBucket: "careaware-2a5c3.appspot.com",
+      messagingSenderId: "244992417352",
+      appId: "1:244992417352:android:393e27b070ce7edcca027d",
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+  </script>
 </head>
 <body>
   <!-- This script installs service_worker.js to provide PWA functionality to
