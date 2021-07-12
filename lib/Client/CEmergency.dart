@@ -76,15 +76,15 @@ class _RegPageState extends State<CEmergency> {
                             tooltip: 'Edit',
                             onPressed: () {
                               showDialog(
-                                  context: context,
-                                  builder: (_) => AlertDialog(
-                                        title: Text(
-                                          'Edited!',
-                                          style: TextStyle(
-                                              fontSize: 14,
-                                              color: Color(0xff007BA4)),
-                                        ),
-                                      ));
+                                context: context,
+                                builder: (_) => AlertDialog(
+                                  title: Text(
+                                    'Edited!',
+                                    style: TextStyle(
+                                        fontSize: 14, color: Color(0xff007BA4)),
+                                  ),
+                                ),
+                              );
                             },
                           ),
                           IconButton(

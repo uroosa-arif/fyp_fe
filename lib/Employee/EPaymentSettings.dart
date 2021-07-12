@@ -1,5 +1,10 @@
+import 'package:careaware/Models/ClientModel.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:uuid/uuid.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -11,6 +16,10 @@ void main() {
 
 class EPaymentSettings extends StatelessWidget {
   var rating = 3.0;
+  ClientModel clientModel;
+
+  final _easyController = TextEditingController();
+  final _bankController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -76,6 +85,7 @@ class EPaymentSettings extends StatelessWidget {
                       height: 10.0,
                     ),
                     TextField(
+                      controller: _easyController,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.orange),
@@ -139,7 +149,20 @@ class EPaymentSettings extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                       borderRadius: new BorderRadius.circular(25),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      String id = Uuid().v4();
+                      // clientModel.id = id;
+                      String userID = FirebaseAuth.instance.currentUser.uid;
+
+                      FirebaseFirestore.instance
+                          .collection("users")
+                          .doc(userID)
+                          .update({"bank_account": _bankController.text});
+                      FirebaseFirestore.instance
+                          .collection("users")
+                          .doc(userID)
+                          .update({"easypaisa_account": _easyController.text});
+                    },
                     child: Text("Save",
                         style: TextStyle(
                           fontSize: 20.0,

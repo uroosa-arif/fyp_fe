@@ -166,8 +166,8 @@ class _ServicesState extends State<Services> {
                         onPressed: () {
                           _onFormSaved();
 
-                          //   Navigator.push(
-                          //       context, MaterialPageRoute(builder: (_) => MeetUs()));
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (_) => MeetUs()));
                         },
                         textColor: Colors.white,
                         elevation: 2.0,
@@ -182,7 +182,7 @@ class _ServicesState extends State<Services> {
     );
   }
 
-  bool isLoading=false;
+  bool isLoading = false;
 
   void _onFormSaved() async {
     final FormState form = _formKey.currentState;
@@ -224,9 +224,10 @@ class _ServicesState extends State<Services> {
             await getUrlFromFile(id, "cnicBack", widget.cnicback);
       }
 
+      String userID = FirebaseAuth.instance.currentUser.uid;
       await FirebaseFirestore.instance
           .collection("users")
-          .doc(id)
+          .doc(userID)
           .set(clientModel.toJson());
 
       print("sab kuch hogya");
@@ -240,9 +241,6 @@ class _ServicesState extends State<Services> {
       Navigator.of(context).pop();
       Navigator.of(context).pop();
       Navigator.of(context).pop();
-
-
-
     } catch (e) {
       print("Koi msla aggya hau:${e.toString()}");
       setState(() {

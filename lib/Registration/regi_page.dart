@@ -77,8 +77,8 @@ class _RegPageState extends State<RegPage> {
                     child: Row(
                       children: [
                         Text("Already Registered?",
-                            style: TextStyle(
-                                color: Colors.white, fontSize: 18)),
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 18)),
                         Text(" Sign in",
                             style: TextStyle(
                                 fontSize: 18,
@@ -88,8 +88,8 @@ class _RegPageState extends State<RegPage> {
                     ),
                   ),
                   onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => Login()));
+                    Navigator.push(
+                        context, MaterialPageRoute(builder: (_) => Login()));
                   },
                 ),
               ),
@@ -185,7 +185,7 @@ class _RegPageState extends State<RegPage> {
                 height: 3.0,
               ),
               Padding(
-                padding:  EdgeInsets.symmetric(horizontal: 10),
+                padding: EdgeInsets.symmetric(horizontal: 10),
                 child: TextFormField(
                   controller: address,
                   decoration: InputDecoration(
@@ -200,9 +200,7 @@ class _RegPageState extends State<RegPage> {
                   ),
                   keyboardType: TextInputType.text,
                   validator: (String value) {
-                    return value.isEmpty
-                        ? 'Address cannot be empty'
-                        : null;
+                    return value.isEmpty ? 'Address cannot be empty' : null;
                   },
                 ),
               ),
@@ -230,16 +228,19 @@ class _RegPageState extends State<RegPage> {
 //                                content: Text('Form Validated, No errors'),
 //                              ));
                       Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (_) => regi_page2(
-                                      clientModel: ClientModel(
-                                    email: email.text,
-                                    fullName: name.text,
-                                    address: address.text,
-                                    phoneNumber: phoneNumber.text,
-                                    password: password.text,
-                                  ))));
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => regi_page2(
+                            clientModel: ClientModel(
+                              email: email.text,
+                              fullName: name.text,
+                              address: address.text,
+                              phoneNumber: phoneNumber.text,
+                              password: password.text,
+                            ),
+                          ),
+                        ),
+                      );
                     }
                   },
                   textColor: Colors.white,
@@ -247,7 +248,9 @@ class _RegPageState extends State<RegPage> {
                   padding: EdgeInsets.all(10.0),
                 ),
               ),
-              SizedBox(height: 300,),
+              SizedBox(
+                height: 300,
+              ),
             ],
           ),
         ),

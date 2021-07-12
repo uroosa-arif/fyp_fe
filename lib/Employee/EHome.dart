@@ -14,53 +14,55 @@ class EHome extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: StreamBuilder<QuerySnapshot>(
-          stream: FirebaseFirestore.instance.collection('users').where('role',isEqualTo: 'Client').snapshots(),
-          builder: (context,snapshot){
-            if(snapshot.connectionState==ConnectionState.waiting)
-              {
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-            else if(snapshot.data.docs.isEmpty)
-                {
-                  return  Center(
-                    child: Text('NO Client DAta found'),
-                  );
-                }
-
-            else{
+          stream: FirebaseFirestore.instance
+              .collection('users')
+              .where('role', isEqualTo: 'Client')
+              .snapshots(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (snapshot.data.docs.isEmpty) {
+              return Center(
+                child: Text('NO Client DAta found'),
+              );
+            } else {
               return ListView.builder(
-                  itemCount: snapshot.data.docs.length,
-                  itemBuilder: (context,i){
-                    ClientModel clientModel=ClientModel.fromJson(snapshot.data.docs[i].data());
-
-                    return
-                      Card(
-                        child: ListTile(
-                          leading: CircleAvatar(
-                            backgroundImage: NetworkImage(clientModel.profilePhotoUrl),
-                          ),
-                          title: Text(
-                            "${clientModel.fullName}",
-                          ),
-                          subtitle: Text('Services: Caring, Bandaging, Cooking'),
-                          trailing: Icon(Icons.keyboard_arrow_right),
-                          onTap: () {
-                            Navigator.push(
-                                context, MaterialPageRoute(builder: (_) => EHomeArrow()));
-                          },
-                        ),
-                      );
-                  });
+                itemCount: snapshot.data.docs.length,
+                itemBuilder: (context, i) {
+                  ClientModel clientModel =
+                      ClientModel.fromJson(snapshot.data.docs[i].data());
+                  return Card(
+                    child: ListTile(
+                      leading: CircleAvatar(
+                        backgroundImage:
+                            NetworkImage(clientModel.profilePhotoUrl),
+                      ),
+                      title: Text(
+                        "${clientModel.fullName}",
+                      ),
+                      subtitle: Text('${clientModel.services}'),
+                      trailing: Icon(Icons.keyboard_arrow_right),
+                      onTap: () {
+                        print(clientModel.profilePhotoUrl);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => EHomeArrow(
+                                      name: clientModel.fullName,
+                                      photoURL: clientModel.profilePhotoUrl,
+                                      services: clientModel.services,
+                                    )));
+                      },
+                    ),
+                  );
+                },
+              );
             }
-
           },
         ),
       ),
     );
   }
 }
-
-
-

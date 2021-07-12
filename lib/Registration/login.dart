@@ -55,21 +55,54 @@ class _MyHomePageState extends State<Login> {
     });
   }
 
-
-  loginToFirebase()async {
-
-
+  loginToFirebase() async {
     print(_email);
     print(_password);
 
-    try{
+    try {
       UserCredential userCredential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(
-          email: _email, password: _password);
+          .signInWithEmailAndPassword(email: _email, password: _password);
 
       showToast("Login Success");
-    }
-    catch(error) {
+
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection("users")
+          .where('email', isEqualTo: _email)
+          .get();
+      print(querySnapshot.docs.length);
+      print(querySnapshot.docs[0].data().toString());
+
+      ClientModel clientModel =
+          ClientModel.fromJson(querySnapshot.docs[0].data());
+
+      if (clientModel.role == 'Employee') {
+        if (_radioValue == 0) {
+          print("employeee data hi hai");
+          print(clientModel.isAccepted);
+          if (clientModel.isAccepted == false) {
+            showToast("Please visit us to approve your account");
+            Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (_) => EMain()));
+            return;
+          }
+        } else {
+          showToast("No such client data found");
+        }
+      }
+
+      if (clientModel.role == 'Client') {
+        if (_radioValue == 1) {
+          if (clientModel.isAccepted == false) {
+            showToast("Please visit us to approve your account");
+            Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (_) => CMain()));
+            return;
+          }
+        } else {
+          showToast("No such employee data found");
+        }
+      }
+    } catch (error) {
       var errorMessage =
           'The password is invalid or the user does not have a password.';
       print(error);
@@ -87,67 +120,10 @@ class _MyHomePageState extends State<Login> {
         errorMessage = 'Invalid password.';
       }
 
-
       showToast(errorMessage);
       return;
     }
-
-
-
-    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-        .collection("users")
-        .where('email', isEqualTo: _email)
-        .get();
-    print(querySnapshot.docs.length);
-    print(querySnapshot.docs[0].data().toString() );
-
-
-    ClientModel clientModel=ClientModel.fromJson(querySnapshot.docs[0].data());
-
-
-
-
-
-    if(clientModel.role=='Employee')
-      {
-        if(_radioValue==0)
-          {
-            print("employeee data hi hai");
-            print(clientModel.isAccepted);
-            if(clientModel.isAccepted==false){
-              showToast("Please visit us to approve your account");
-              return;
-            }
-            Navigator.push(context, MaterialPageRoute(builder: (_) => EMain()));
-
-          }
-        else{
-          showToast("No such client data found");
-        }
-      }
-
-
-
-    if(clientModel.role=='Client')
-    {
-      if(_radioValue==1)
-      {
-        print("client DAta data hi hai");
-        if(clientModel.isAccepted==false){
-          showToast("Please visit us to approve your account");
-          return;
-        }
-        Navigator.push(context, MaterialPageRoute(builder: (_) => CMain()));
-
-      }
-      else{
-        showToast("No such employee data found");
-      }
-    }
-
-
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -227,15 +203,11 @@ class _MyHomePageState extends State<Login> {
                 letterSpacing: 1.0,
                 color: Colors.white,
                 fontWeight: FontWeight.bold)),
-        onPressed: () async{
+        onPressed: () async {
           await loginToFirebase();
         },
       ),
     );
-
-
-
-
 
     final RegisterButton = Material(
       borderRadius: BorderRadius.circular(30.0),
@@ -413,9 +385,7 @@ class ExampleNumber {
   }
 }
 
-
-
-void showToast(String message){
+void showToast(String message) {
   Fluttertoast.showToast(
       msg: "$message",
       toastLength: Toast.LENGTH_SHORT,
