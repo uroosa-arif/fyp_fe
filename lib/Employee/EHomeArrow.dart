@@ -1,3 +1,4 @@
+import 'package:careaware/General/chat.dart';
 import 'package:careaware/Models/ClientModel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -171,7 +172,12 @@ class EHomeArrow extends StatelessWidget {
                         width: 113,
                         height: 40,
                         child: RaisedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return ChatScreen();
+                            }));
+                          },
                           child: Text("Message",
                               style: TextStyle(
                                 fontSize: 18.0,

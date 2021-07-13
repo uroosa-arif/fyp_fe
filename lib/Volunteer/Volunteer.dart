@@ -1,3 +1,5 @@
+import 'package:careaware/Models/ClientModel.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 
@@ -8,7 +10,14 @@ void main() {
   runApp(Volunteer());
 }
 
-class Volunteer extends StatelessWidget {
+class Volunteer extends StatefulWidget {
+  @override
+  _VolunteerState createState() => _VolunteerState();
+}
+
+class _VolunteerState extends State<Volunteer> {
+  final db = FirebaseFirestore.instance;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -30,6 +39,46 @@ class Volunteer extends StatelessWidget {
             },
           ),
         ),
+        // body: StreamBuilder<QuerySnapshot>(
+        //   stream:
+        //       FirebaseFirestore.instance.collection('volunteers').snapshots(),
+        //   builder: (context, snapshot) {
+        //     if (snapshot.connectionState == ConnectionState.waiting) {
+        //       return Center(
+        //         child: CircularProgressIndicator(),
+        //       );
+        //     } else {
+        //       return ListView.builder(
+        //         itemCount: snapshot.data.docs.length,
+        //         itemBuilder: (context, i) {
+        //           print(snapshot.data.docs[i]);
+        //           return Card(
+        //             child: ListTile(
+        //               leading: CircleAvatar(
+        //                 backgroundImage:
+        //                     NetworkImage(snapshot.data.docs[i].toString()),
+        //               ),
+        //               trailing: Icon(Icons.keyboard_arrow_right),
+        //               onTap: () {
+        //                 // print(clientModel.profilePhotoUrl);
+        //                 // Navigator.push(
+        //                 //   context,
+        //                 //   MaterialPageRoute(
+        //                 //     builder: (_) => CHomeArrow(
+        //                 //       name: clientModel.fullName,
+        //                 //       imageURL: clientModel.profilePhotoUrl,
+        //                 //       services: clientModel.services,
+        //                 //     ),
+        //                 //   ),
+        //                 // );
+        //               },
+        //             ),
+        //           );
+        //         },
+        //       );
+        //     }
+        //   },
+        // ),
         body: ImageSlideshow(
           /// Width of the [ImageSlideshow].
           width: double.infinity,
@@ -48,6 +97,7 @@ class Volunteer extends StatelessWidget {
 
           /// The widgets to display in the [ImageSlideshow].
           /// Add the sample image file into the images folder
+
           children: [
             Image.asset(
               'assets/images/sample_image_1.png',

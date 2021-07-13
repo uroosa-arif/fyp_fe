@@ -13,20 +13,21 @@ class ClientModel {
   List<dynamic> services;
   bool isAccepted;
 
-  ClientModel(
-      {this.id,
-      this.email,
-      this.password,
-      this.role,
-      this.fullName,
-      this.address,
-      this.phoneNumber,
-      this.gender,
-      this.profilePhotoUrl,
-      this.cnicFront,
-      this.cnicBack,
-      this.services,
-      this.isAccepted});
+  ClientModel({
+    this.id,
+    this.email,
+    this.password,
+    this.role,
+    this.fullName,
+    this.address,
+    this.phoneNumber,
+    this.gender,
+    this.profilePhotoUrl,
+    this.cnicFront,
+    this.cnicBack,
+    this.services,
+    this.isAccepted,
+  });
 
   ClientModel.fromJson(Map<String, dynamic> map) {
     this.id = map['id'];
@@ -60,5 +61,19 @@ class ClientModel {
       "cnicBack": this.cnicBack,
       "services": this.services,
     };
+  }
+}
+
+class RecentClientModel {
+  String name;
+  String profilImage;
+  List services;
+
+  RecentClientModel({this.name, this.profilImage, this.services});
+
+  RecentClientModel.fromJson(Map<String, dynamic> map) {
+    this.name = map['EmployeeName'];
+    this.profilImage = map['EmployeePhoto'];
+    this.services = map['EmployeeServices'];
   }
 }

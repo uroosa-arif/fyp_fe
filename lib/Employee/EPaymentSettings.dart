@@ -112,7 +112,7 @@ class EPaymentSettings extends StatelessWidget {
                     SizedBox(
                       height: 3.0,
                     ),
-                    new Text(
+                    Text(
                       'Account Number',
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
@@ -128,12 +128,15 @@ class EPaymentSettings extends StatelessWidget {
                       height: 10.0,
                     ),
                     TextField(
+                      controller: _bankController,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.orange),
                         ),
                         contentPadding: EdgeInsets.symmetric(
-                            vertical: 6.0, horizontal: 50.0),
+                          vertical: 6.0,
+                          horizontal: 50.0,
+                        ),
                       ),
                     ),
                   ],

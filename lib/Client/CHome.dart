@@ -26,7 +26,7 @@ class CHome extends StatelessWidget {
               );
             } else if (snapshot.data.docs.isEmpty) {
               return Center(
-                child: Text('NO Client DAta found'),
+                child: Text('No Client DAta found'),
               );
             } else {
               return ListView.builder(
@@ -54,6 +54,7 @@ class CHome extends StatelessWidget {
                               name: clientModel.fullName,
                               imageURL: clientModel.profilePhotoUrl,
                               services: clientModel.services,
+                              email: clientModel.email,
                             ),
                           ),
                         );

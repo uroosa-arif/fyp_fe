@@ -122,6 +122,7 @@ class Epayrecords_details extends StatelessWidget {
                   height: 40.0,
                   child: RaisedButton(
                     onPressed: () {
+                      Navigator.pop(context);
                       Navigator.push(
                           context, MaterialPageRoute(builder: (_) => EMain()));
                     },

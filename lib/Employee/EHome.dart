@@ -25,7 +25,7 @@ class EHome extends StatelessWidget {
               );
             } else if (snapshot.data.docs.isEmpty) {
               return Center(
-                child: Text('NO Client DAta found'),
+                child: Text('No Client DAta found'),
               );
             } else {
               return ListView.builder(

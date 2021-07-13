@@ -1,4 +1,8 @@
 import 'package:careaware/General/Reviews.dart';
+import 'package:careaware/General/chat.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
@@ -10,8 +14,8 @@ void main() {
 
 class CHomeArrow extends StatelessWidget {
   var rating = 3.0;
-  CHomeArrow({this.name, this.imageURL, this.services});
-  final name, imageURL;
+  CHomeArrow({this.name, this.imageURL, this.services, this.email});
+  final String name, imageURL, email;
   final List services;
   @override
   Widget build(BuildContext context) {
@@ -190,7 +194,12 @@ class CHomeArrow extends StatelessWidget {
                           shape: RoundedRectangleBorder(
                             borderRadius: new BorderRadius.circular(30),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return ChatScreen();
+                            }));
+                          },
                           child: Text("Message"),
                           color: Color(0xFF007BA4),
                           textColor: Colors.white,
@@ -206,8 +215,17 @@ class CHomeArrow extends StatelessWidget {
                             borderRadius: new BorderRadius.circular(30),
                           ),
                           onPressed: () {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (_) => CMain()));
+                            String userID =
+                                FirebaseAuth.instance.currentUser.uid;
+                            FirebaseFirestore.instance
+                                .collection('users')
+                                .doc(userID)
+                                .update({
+                              'EmployeeEmail': '$email',
+                              'EmployeeName': '$name',
+                              'EmployeePhoto': '$imageURL',
+                              'EmployeeServices': services,
+                            });
                             return showDialog(
                                 context: context,
                                 builder: (_) => AlertDialog(

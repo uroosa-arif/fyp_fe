@@ -1,7 +1,11 @@
 import 'dart:io';
 import 'package:careaware/Registration/services.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 import 'CRate.dart';
 
 void main() => runApp(CPaid());
@@ -197,14 +201,32 @@ class _pay extends State<CPaid> {
                 label: Text('OK'),
                 icon: Icon(Icons.check_box),
                 onPressed: () {
-//                  if (_formKey.currentState.validate()) {
-//                              Scaffold.of(context).showSnackBar(SnackBar(
-//                                content: Text('Form Validated, No errors'),
-//                              ));
-//
-//                  }
-                  Navigator.push(
-                      context, MaterialPageRoute(builder: (_) => CRate()));
+                  String userID = FirebaseAuth.instance.currentUser.uid;
+
+                  try {
+                    String id = Uuid().v4();
+
+                    if (_image != null) {
+                      _image = getUrlFromFile(id, "Receipt", _image) as File;
+                    }
+                    FirebaseFirestore.instance
+                        .collection('users')
+                        .doc(userID)
+                        .update({
+                      'Receipt': _image,
+                    });
+                    Navigator.push(
+                        context, MaterialPageRoute(builder: (_) => CRate()));
+                  } catch (e) {
+                    FirebaseFirestore.instance
+                        .collection('users')
+                        .doc(userID)
+                        .update({
+                      'Receipt': _image,
+                    });
+                    Navigator.push(
+                        context, MaterialPageRoute(builder: (_) => CRate()));
+                  }
                 },
                 textColor: Colors.white,
                 elevation: 2.0,
@@ -215,5 +237,26 @@ class _pay extends State<CPaid> {
         ),
       ),
     );
+  }
+
+  Future<String> getUrlFromFile(String id, String where, File file) async {
+    String newValue = '';
+    try {
+      print("ASD4");
+      UploadTask storageUploadTask =
+          fireStorage.child('userData/$id/$where').putFile(_image);
+      await storageUploadTask.then((tasksnap) async {
+        var mediaurl = await tasksnap.ref.getDownloadURL();
+        print(mediaurl);
+        setState(() {
+          newValue = mediaurl;
+        });
+        print("ASD5");
+      });
+      return newValue;
+    } catch (e) {
+      print("Cant upload");
+      return newValue;
+    }
   }
 }
